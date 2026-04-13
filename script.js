@@ -129,12 +129,15 @@ function handleAnswer(btn, correct) {
   if (btn.textContent === correct) {
     btn.classList.add("correct");
     score++;
+    correctSound.play();
   } else {
     btn.classList.add("wrong");
+    wrongSound.play();
   }
 
   setTimeout(nextQuestion, 600);
 }
+
 
 // ---------------------------
 // Next Question
