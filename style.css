@@ -1,1 +1,71 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: white;
+}
 
+#app {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+select, button {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+}
+
+button {
+  background: #4caf50;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #45a049;
+}
+
+.answers button {
+  width: 100%;
+  margin-bottom: 10px;
+  background: #333;
+}
+
+.answers button:hover {
+  background: #444;
+}
+
+.timer {
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.leaderboard {
+  list-style: none;
+  padding: 0;
+}
+
+.leaderboard li {
+  background: #222;
+  padding: 8px;
+  margin-bottom: 5px;
+  border-radius: 4px;
+}
+
+.correct {
+  background-color: #0f0 !important;
+}
+
+.wrong {
+  background-color: #f00 !important;
+}
