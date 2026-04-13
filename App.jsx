@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 
-// ---------------------- UTIL: SHUFFLE ----------------------
+// ======================================================
+// SHUFFLE UTILITY
+// ======================================================
 function shuffle(array) {
   const arr = [...array];
   for (let i = arr.length - 1; i > 0; i--) {
@@ -10,7 +12,9 @@ function shuffle(array) {
   return arr;
 }
 
-// ---------------------- HOOK: TIMER ----------------------
+// ======================================================
+// TIMER HOOK
+// ======================================================
 function useTimer(seconds, onExpire) {
   const [timeLeft, setTimeLeft] = useState(seconds);
 
@@ -30,17 +34,23 @@ function useTimer(seconds, onExpire) {
   return timeLeft;
 }
 
-// ---------------------- COMPONENT: LOADER ----------------------
+// ======================================================
+// LOADER
+// ======================================================
 function Loader() {
   return <div className="loader">Loading...</div>;
 }
 
-// ---------------------- COMPONENT: ERROR MESSAGE ----------------------
+// ======================================================
+// ERROR MESSAGE
+// ======================================================
 function ErrorMessage({ message }) {
   return <div className="error">{message}</div>;
 }
 
-// ---------------------- COMPONENT: START SCREEN ----------------------
+// ======================================================
+// START SCREEN
+// ======================================================
 function StartScreen({ setGameState, setQuestions }) {
   const [category, setCategory] = useState("9");
   const [difficulty, setDifficulty] = useState("easy");
@@ -74,10 +84,10 @@ function StartScreen({ setGameState, setQuestions }) {
   }
 
   return (
-    <div className="start-screen">
+    <div className="screen">
       <h1>Grand Master Trivia Engine</h1>
 
-      <label>Category:</label>
+      <label>Category</label>
       <select value={category} onChange={e => setCategory(e.target.value)}>
         <option value="9">General Knowledge</option>
         <option value="17">Science</option>
@@ -85,7 +95,7 @@ function StartScreen({ setGameState, setQuestions }) {
         <option value="11">Film</option>
       </select>
 
-      <label>Difficulty:</label>
+      <label>Difficulty</label>
       <select value={difficulty} onChange={e => setDifficulty(e.target.value)}>
         <option value="easy">Easy</option>
         <option value="medium">Medium</option>
@@ -98,7 +108,7 @@ function StartScreen({ setGameState, setQuestions }) {
       {error && <ErrorMessage message={error} />}
 
       <h2>Top Scores</h2>
-      <ul>
+      <ul className="leaderboard">
         {scores.map((s, i) => (
           <li key={i}>{s}</li>
         ))}
@@ -107,7 +117,9 @@ function StartScreen({ setGameState, setQuestions }) {
   );
 }
 
-// ---------------------- COMPONENT: QUIZ ----------------------
+// ======================================================
+// QUIZ SCREEN
+// ======================================================
 function Quiz({ questions, score, setScore, setGameState }) {
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
@@ -131,10 +143,8 @@ function Quiz({ questions, score, setScore, setGameState }) {
     if (correct) {
       setScore(prev => prev + 1);
       setFeedbackClass("correct-flash");
-      // new Audio("/sounds/correct.mp3").play();
     } else {
       setFeedbackClass("shake");
-      // new Audio("/sounds/wrong.mp3").play();
     }
 
     setTimeout(() => {
@@ -148,10 +158,10 @@ function Quiz({ questions, score, setScore, setGameState }) {
   }
 
   return (
-    <div className={`quiz ${feedbackClass}`}>
+    <div className={`screen ${feedbackClass}`}>
       <h2 dangerouslySetInnerHTML={{ __html: q.question }} />
 
-      <div className="timer">Time Left: {timeLeft}</div>
+      <div className="timer">⏳ {timeLeft}s</div>
 
       <div className="answers">
         {answers.map((a, i) => (
@@ -166,7 +176,9 @@ function Quiz({ questions, score, setScore, setGameState }) {
   );
 }
 
-// ---------------------- COMPONENT: RESULTS SCREEN ----------------------
+// ======================================================
+// RESULTS SCREEN
+// ======================================================
 function ResultsScreen({ score, setGameState }) {
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("scores")) || [];
@@ -178,7 +190,7 @@ function ResultsScreen({ score, setGameState }) {
   }, [score]);
 
   return (
-    <div className="results-screen">
+    <div className="screen">
       <h1>Your Score: {score}</h1>
       <button onClick={() => setGameState("START_SCREEN")}>
         Play Again
@@ -187,14 +199,16 @@ function ResultsScreen({ score, setGameState }) {
   );
 }
 
-// ---------------------- MAIN APP ----------------------
+// ======================================================
+// MAIN APP
+// ======================================================
 export default function App() {
   const [gameState, setGameState] = useState("START_SCREEN");
   const [questions, setQuestions] = useState([]);
   const [score, setScore] = useState(0);
 
   return (
-    <div className="app-container">
+    <div className="app">
       {gameState === "START_SCREEN" && (
         <StartScreen
           setGameState={setGameState}
@@ -220,3 +234,106 @@ export default function App() {
     </div>
   );
 }
+
+// ======================================================
+// EMBEDDED CSS (WORKS IN VITE OR CREATE-REACT-APP)
+// ======================================================
+const style = document.createElement("style");
+style.innerHTML = `
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: white;
+  }
+
+  .app {
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+  }
+
+  .screen {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  select, button {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: none;
+  }
+
+  button {
+    background: #4caf50;
+    color: white;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: #45a049;
+  }
+
+  .answers button {
+    width: 100%;
+    margin-bottom: 10px;
+    background: #333;
+  }
+
+  .answers button:hover {
+    background: #444;
+  }
+
+  .timer {
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .leaderboard {
+    list-style: none;
+    padding: 0;
+  }
+
+  .leaderboard li {
+    background: #222;
+    padding: 8px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+  }
+
+  .loader {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+
+  .error {
+    color: #ff4444;
+    font-weight: bold;
+  }
+
+  /* Animations */
+  .correct-flash {
+    animation: flashGreen 0.4s;
+  }
+
+  @keyframes flashGreen {
+    0% { background-color: #0f0; }
+    100% { background-color: transparent; }
+  }
+
+  .shake {
+    animation: shakeAnim 0.4s;
+  }
+
+  @keyframes shakeAnim {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-6px); }
+    100% { transform: translateX(0); }
+  }
+`;
+document.head.appendChild(style);
