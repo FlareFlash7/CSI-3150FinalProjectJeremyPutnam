@@ -68,7 +68,9 @@ function StartScreen({ setGameState, setQuestions }) {
     setError("");
 
     try {
-      const url = `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple`;
+      // UPDATED URL — always fetch 50 questions + category + difficulty
+      const url = `https://opentdb.com/api.php?amount=50&category=${category}&difficulty=${difficulty}&type=multiple`;
+
       const res = await fetch(url);
       const data = await res.json();
 
@@ -236,7 +238,7 @@ export default function App() {
 }
 
 // ======================================================
-// EMBEDDED CSS (WORKS IN VITE OR CREATE-REACT-APP)
+// EMBEDDED CSS
 // ======================================================
 const style = document.createElement("style");
 style.innerHTML = `
