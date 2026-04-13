@@ -1,3 +1,5 @@
+const correctSound = new Audio("sounds/correct.mp3");
+const wrongSound = new Audio("sounds/wrong.mp3");
 const app = document.getElementById("app");
 
 let questions = [];
