@@ -98,8 +98,9 @@ function renderQuestion() {
 
 //starts the timer which counts down and displays
 function startTimer() {
-  //this helps clear the intervals so that multiple countdowns dont get created at once
+  //Helps make sure multiple timers arent created at once
   clearInterval(timerInterval);
+  timerInterval = null;
 
   timeLeft = 15;
   document.getElementById("timer").textContent = `⏳ ${timeLeft}s`;
@@ -110,10 +111,12 @@ function startTimer() {
 
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
+      timerInterval = null;
       nextQuestion();
     }
   }, 1000);
 }
+
 
 
 //handles the answers whether the user gets it wrong or right
