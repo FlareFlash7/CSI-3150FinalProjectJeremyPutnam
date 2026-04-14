@@ -98,6 +98,9 @@ function renderQuestion() {
 
 //starts the timer which counts down and displays
 function startTimer() {
+  //this helps clear the intervals so that multiple countdowns dont get created at once
+  clearInterval(timerInterval);
+
   timeLeft = 15;
   document.getElementById("timer").textContent = `⏳ ${timeLeft}s`;
 
@@ -111,6 +114,7 @@ function startTimer() {
     }
   }, 1000);
 }
+
 
 //handles the answers whether the user gets it wrong or right
 function handleAnswer(btn, correct) {
