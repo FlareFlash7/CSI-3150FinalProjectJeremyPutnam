@@ -1,16 +1,16 @@
+//helps set constants for the audio sounds and the app element
 const correctSound = new Audio("sounds/correct.mp3");
 const wrongSound = new Audio("sounds/wrong.mp3");
 const app = document.getElementById("app");
 
+//setting up the let elements
 let questions = [];
 let index = 0;
 let score = 0;
 let timerInterval = null;
 let timeLeft = 15;
 
-// ---------------------------
-// Render Start Screen
-// ---------------------------
+//renders the start screen and formats the text and buttons
 function renderStartScreen() {
   app.innerHTML = `
     <div class="screen">
@@ -42,18 +42,14 @@ function renderStartScreen() {
   document.getElementById("startBtn").onclick = startGame;
 }
 
-// ---------------------------
-// Load Scores
-// ---------------------------
+//loads the scores for the leaderboard
 function loadScores() {
   const saved = JSON.parse(localStorage.getItem("scores")) || [];
   const list = document.getElementById("leaderboard");
   list.innerHTML = saved.map(s => `<li>${s}</li>`).join("");
 }
 
-// ---------------------------
-// Start Game
-// ---------------------------
+//start the game code
 async function startGame() {
   const category = document.getElementById("category").value;
   const difficulty = document.getElementById("difficulty").value;
@@ -72,9 +68,7 @@ async function startGame() {
   renderQuestion();
 }
 
-// ---------------------------
-// Render Question
-// ---------------------------
+//helps renders questions and references the timer class so it can display
 function renderQuestion() {
   const q = questions[index];
   const answers = shuffle([
@@ -102,9 +96,7 @@ function renderQuestion() {
   startTimer();
 }
 
-// ---------------------------
-// Timer
-// ---------------------------
+//starts the timer which counts down and displays
 function startTimer() {
   timeLeft = 15;
   document.getElementById("timer").textContent = `⏳ ${timeLeft}s`;
@@ -120,9 +112,7 @@ function startTimer() {
   }, 1000);
 }
 
-// ---------------------------
-// Handle Answer
-// ---------------------------
+//handles the answers whether the user gets it wrong or right
 function handleAnswer(btn, correct) {
   clearInterval(timerInterval);
 
@@ -140,9 +130,7 @@ function handleAnswer(btn, correct) {
 
 
 
-// ---------------------------
-// Next Question
-// ---------------------------
+//renders the next question
 function nextQuestion() {
   index++;
   if (index < questions.length) {
@@ -152,9 +140,7 @@ function nextQuestion() {
   }
 }
 
-// ---------------------------
-// Results Screen
-// ---------------------------
+//helps save the scores and renders results
 function renderResults() {
   saveScore(score);
 
@@ -168,18 +154,14 @@ function renderResults() {
   document.getElementById("restartBtn").onclick = renderStartScreen;
 }
 
-// ---------------------------
-// Save Score
-// ---------------------------
+//function to save the score
 function saveScore(score) {
   const saved = JSON.parse(localStorage.getItem("scores")) || [];
   const updated = [...saved, score].sort((a, b) => b - a).slice(0, 5);
   localStorage.setItem("scores", JSON.stringify(updated));
 }
 
-// ---------------------------
-// Shuffle Utility
-// ---------------------------
+//shuffles the questions
 function shuffle(arr) {
   return arr
     .map(a => ({ sort: Math.random(), value: a }))
@@ -187,7 +169,5 @@ function shuffle(arr) {
     .map(a => a.value);
 }
 
-// ---------------------------
-// Start App
-// ---------------------------
+//starts up the application
 renderStartScreen();
