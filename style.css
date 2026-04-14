@@ -1,3 +1,4 @@
+/*sets the font, the background and makes the text white*/
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -5,18 +6,21 @@ body {
   color: white;
 }
 
+/*formats the width and margin*/
 #app {
   max-width: 600px;
   margin: auto;
   padding: 20px;
 }
 
+/*makes a flex container and helps with spacing*/
 .screen {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
+/*makes padding and font size for the buttons*/
 select, button {
   padding: 10px;
   font-size: 1rem;
@@ -24,37 +28,44 @@ select, button {
   border: none;
 }
 
+/*chooses a background color for the button*/
 button {
   background: #4caf50;
   color: white;
   cursor: pointer;
 }
 
+/*hovering background color*/
 button:hover {
   background: #45a049;
 }
 
+/*formats width and sets background*/
 .answers button {
   width: 100%;
   margin-bottom: 10px;
   background: #333;
 }
 
+/*background for answers button hovering*/
 .answers button:hover {
   background: #444;
 }
 
+/*font size, bolding and aligning the timer number*/
 .timer {
   font-size: 1.4rem;
   font-weight: bold;
   text-align: center;
 }
 
+/*formats the leaderboard*/
 .leaderboard {
   list-style: none;
   padding: 0;
 }
 
+/*sets background, padding, margin and border for the leaderboard*/
 .leaderboard li {
   background: #222;
   padding: 8px;
@@ -62,28 +73,31 @@ button:hover {
   border-radius: 4px;
 }
 
+/*makes correct answers green*/
 .correct {
   background-color: #0f0 !important;
 }
 
-/* Correct Flash Animation */
+/*displays a flash animation for correct answers*/
 .correct {
   background-color: #0f0 !important;
   animation: flash 0.4s ease;
 }
 
+/*code that makes the correct answer flash*/
 @keyframes flash {
   0% { transform: scale(1); }
   50% { transform: scale(1.15); }
   100% { transform: scale(1); }
 }
 
-/* Wrong Shake Animation */
+/*displays a shaking animation for wrong answers*/
 .wrong {
   background-color: #f00 !important;
   animation: shake 0.4s ease;
 }
 
+/*code that makes the wrong answer shake*/
 @keyframes shake {
   0% { transform: translateX(0); }
   25% { transform: translateX(-6px); }
@@ -92,6 +106,7 @@ button:hover {
   100% { transform: translateX(0); }
 }
 
+/*makes a wrong answer red*/
 .wrong {
   background-color: #f00 !important;
 }
