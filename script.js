@@ -96,9 +96,36 @@ function renderQuestion() {
   startTimer();
 }
 
-//starts the timer which counts down and displays
+// ===============================
+// Updated handleAnswer()
+// ===============================
+function handleAnswer(btn, correct) {
+  // Stop any running timer immediately
+  clearInterval(timerInterval);
+  timerInterval = null;
+
+  // Disable all buttons to prevent rapid clicking
+  document.querySelectorAll(".answerBtn").forEach(b => b.disabled = true);
+
+  if (btn.textContent === correct) {
+    btn.classList.add("correct");
+    score++;
+    correctSound.play();
+  } else {
+    btn.classList.add("wrong");
+    wrongSound.play();
+  }
+
+  setTimeout(nextQuestion, 600);
+}
+
+
+
+// ===============================
+// Updated startTimer()
+// ===============================
 function startTimer() {
-  //Helps make sure multiple timers arent created at once
+  // Stop any existing timer before starting a new one
   clearInterval(timerInterval);
   timerInterval = null;
 
@@ -112,28 +139,15 @@ function startTimer() {
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
       timerInterval = null;
+
+      // Disable buttons so user can't click during transition
+      document.querySelectorAll(".answerBtn").forEach(b => b.disabled = true);
+
       nextQuestion();
     }
   }, 1000);
 }
 
-
-
-//handles the answers whether the user gets it wrong or right
-function handleAnswer(btn, correct) {
-  clearInterval(timerInterval);
-
-  if (btn.textContent === correct) {
-    btn.classList.add("correct");
-    score++;
-    correctSound.play();
-  } else {
-    btn.classList.add("wrong");
-    wrongSound.play();
-  }
-
-  setTimeout(nextQuestion, 600);
-}
 
 
 
