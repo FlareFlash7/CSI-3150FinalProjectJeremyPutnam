@@ -96,15 +96,13 @@ function renderQuestion() {
   startTimer();
 }
 
-// ===============================
-// Updated handleAnswer()
-// ===============================
+//handling the answer code
 function handleAnswer(btn, correct) {
   // Stop any running timer immediately
   clearInterval(timerInterval);
   timerInterval = null;
 
-  // Disable all buttons to prevent rapid clicking
+  //stops input after answering so multiple countdowns arent created
   document.querySelectorAll(".answerBtn").forEach(b => b.disabled = true);
 
   if (btn.textContent === correct) {
@@ -121,11 +119,9 @@ function handleAnswer(btn, correct) {
 
 
 
-// ===============================
-// Updated startTimer()
-// ===============================
+//starts a 15 second timer and counts down
 function startTimer() {
-  // Stop any existing timer before starting a new one
+  //clear previous counters 
   clearInterval(timerInterval);
   timerInterval = null;
 
@@ -140,7 +136,7 @@ function startTimer() {
       clearInterval(timerInterval);
       timerInterval = null;
 
-      // Disable buttons so user can't click during transition
+      //stops input during transitions
       document.querySelectorAll(".answerBtn").forEach(b => b.disabled = true);
 
       nextQuestion();
